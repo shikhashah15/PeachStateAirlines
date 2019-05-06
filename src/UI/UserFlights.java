@@ -16,23 +16,24 @@ import UI.LoginScreen;
 public class UserFlights {
 	
 	private static Stage window;
-	private static Button mainMenu;
+	private static Button home;
 	private static Button remove;
-	private static ObservableList<Flights> oblist;
+	public static ObservableList<Flights> oblist;
 	private static VBox vbox;
 	private static Scene scene; 
+	public static TableView<Flights> table;
 	
 	@SuppressWarnings("unchecked")
 	public static void initialize() {
 		
-		mainMenu = new Button("Main Menu");
+		home = new Button("Main Menu");
 		remove = new Button("Remove Flight");
 		window = new Stage(); 
 		
 		try {
 			
 			@SuppressWarnings("rawtypes")
-			TableView tb = new TableView();
+			TableView<Flights> tb = new TableView();
 			
 			TableColumn<Flights, String> col1 = new TableColumn<>("Origin");
 			col1.setCellValueFactory(new PropertyValueFactory<>("origin"));
@@ -47,13 +48,12 @@ public class UserFlights {
 			col4.setCellValueFactory(new PropertyValueFactory<>("date"));
 			
 			tb.getColumns().addAll(col1, col2, col3, col4);
-			
-      
+			     
         	oblist = DBConnector.getFlights(LoginScreen.currentUsername);
         
 			tb.setItems(oblist);
 		    vbox = new VBox(tb);
-		    vbox.getChildren().addAll(remove, mainMenu); 
+		    vbox.getChildren().addAll(remove, home); 
 			scene = new Scene(vbox, 700, 500);
 			window.setScene(scene);
 			window.show();
@@ -66,10 +66,20 @@ public class UserFlights {
 				
 			});
 			
-			mainMenu.setOnAction(e -> {
+			home.setOnAction(e -> {
 				
-				LoginScreen.initialize();
-				window.close();
+				if (LoginScreen.currentUsername.equals("admin")) {
+					
+					AdminMainMenu.initialize();
+					window.close();
+					
+				}
+				else { 
+					
+					UserMainMenu.initialize();
+					window.close();
+					
+				}
 				
 			});
 			
@@ -87,7 +97,7 @@ public class UserFlights {
 	}
 
 	public static Button getMainMenu() {
-		return mainMenu;
+		return home;
 	}
 
 	public static Button getDelete() {

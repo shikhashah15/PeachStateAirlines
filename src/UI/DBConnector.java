@@ -370,5 +370,66 @@ public class DBConnector {
 		
 		return newFlight; 
 	}
+	
+	public static Flights getFlight(String origin, String destination, String date, String time) {
+		
+		Flights selectedFlight = null; 
+		
+		try {
+			
+			Connection con = DBConnector.getConnection();
+
+			String sql2 = "SELECT * from `flights` where origin = ? and destination = ? and time = ? and date = ?";
+			PreparedStatement ps2 = con.prepareStatement(sql2);
+			ps2.setString(1, origin);
+			ps2.setString(2, destination);
+			ps2.setString(3, time);
+			ps2.setString(4, date);
+			
+			ResultSet rs = ps2.executeQuery(); 
+		
+			rs.next(); 
+		
+			selectedFlight = (new Flights(rs.getString("origin"),rs.getString("destination"),
+					rs.getString("time"),rs.getString("date"),rs.getString("username")));
+			return selectedFlight; 
+			
+		}
+		catch (SQLException ex) {
+			return selectedFlight; 
+		}
+		
+	}
+	
+	public static boolean flightExists(Flights flight, String origin, String destination, String date, String time) {
+		
+		boolean exists = false; 
+		
+		try {
+			
+			Connection con = DBConnector.getConnection();
+			String sql = "SELECT * FROM `flights`"; 
+			PreparedStatement ps = con.prepareStatement(sql); 
+			ResultSet rs = ps.executeQuery(); 
+			
+			while (rs.next()) {
+				
+				if(origin.equals("origin") && destination.equals("destination") && date.equals("date") && time.equals("time") ) {
+					
+					exists = true; 
+					
+				}
+				
+			}
+			
+			
+		} catch (SQLException ex) {
+			
+			ex.printStackTrace();
+			
+		}
+		
+		return exists; 
+	}
 
 }

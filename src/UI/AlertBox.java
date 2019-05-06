@@ -21,6 +21,7 @@ public class AlertBox {
         window = new Stage();
 
         //Block events to other windows
+        window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
         window.setMinWidth(250);
 
@@ -34,7 +35,7 @@ public class AlertBox {
         	
         });
 
-        layout = new VBox(10);
+        layout = new VBox(15);
         layout.getChildren().addAll(label, mainMenu);
         layout.setAlignment(Pos.CENTER);
 

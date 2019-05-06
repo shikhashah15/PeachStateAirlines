@@ -1,5 +1,6 @@
 package UI;
 
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -10,25 +11,30 @@ public class UserMainMenu {
 	
 	private static Stage window;
 	private static Scene scene;
-	private static Button searchFlights, accountReservations;
+	private static Button searchFlights, accountReservations, mainMenu;
+	private static Label label; 
+	private static VBox layout; 
 	
 	public static void initialize() {
 		
 		try {
 				window = new Stage(); 
-		        //Button 1
-		        Label label1 = new Label("Welcome USER!!");
-		        Button searchFlights = new Button("Search Flights");
-		        Button accountReservations = new Button("Account Reservations");
+				mainMenu = new Button("Main Menu"); 
+		       
+		        label = new Label();
+		        label.setText("Welcome " + LoginScreen.currentUsername + "!");
+		        searchFlights = new Button("Search Flights");
+		        accountReservations = new Button("My Reservations");
+		      
 
-
-		        //Layout 1 - children laid out in vertical column
-		        VBox layout1 = new VBox();
-		        layout1.getChildren().addAll(label1, searchFlights, accountReservations);
-		        scene = new Scene(layout1, 700, 500);
-
+		        layout = new VBox(15);
+		        
+		        layout.setAlignment(Pos.BASELINE_CENTER);
+		        
+		        layout.getChildren().addAll(label, searchFlights, accountReservations, mainMenu);
+		        scene = new Scene(layout, 700, 500);
 		        window.setScene(scene);
-		        window.setTitle("Title Here");
+		        window.setTitle("Home");
 		        window.show();
 		        
 		        searchFlights.setOnAction(e -> {
@@ -41,6 +47,13 @@ public class UserMainMenu {
 		        accountReservations.setOnAction(e -> {
 		        	
 		        	UserFlights.initialize(); 
+		        	window.close();
+		        	
+		        });
+		        
+		        mainMenu.setOnAction(e -> {
+		        	
+		        	LoginScreen.initialize();
 		        	window.close();
 		        	
 		        });
@@ -66,6 +79,18 @@ public class UserMainMenu {
 
 	public static Button getAccountReservations() {
 		return accountReservations;
+	}
+
+	public static Button getMainMenu() {
+		return mainMenu;
+	}
+
+	public static Label getLabel() {
+		return label;
+	}
+
+	public static VBox getLayout() {
+		return layout;
 	}
 
 

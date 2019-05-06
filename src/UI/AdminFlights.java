@@ -64,7 +64,7 @@ public class AdminFlights {
         
 			tb.setItems(oblist);
 		    vbox = new VBox(tb);
-		    vbox.getChildren().addAll(delete, add, home, update, origin, destination, date, time); 
+		    vbox.getChildren().addAll(delete, add, home, origin, destination, time, date, update); 
 			scene = new Scene(vbox, 700, 550);
 			window.setScene(scene);
 			window.show();

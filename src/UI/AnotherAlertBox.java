@@ -29,14 +29,14 @@ public class AnotherAlertBox {
         	
         });
 
-        VBox layout = new VBox(10);
+        VBox layout = new VBox(15);
         layout.getChildren().addAll(label, home);
         layout.setAlignment(Pos.CENTER);
 
         //Display window and wait for it to be closed before returning
         Scene scene = new Scene(layout);
         window.setScene(scene);
-        window.showAndWait();
+        window.show();
         
     }
 

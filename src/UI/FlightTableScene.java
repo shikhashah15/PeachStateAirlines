@@ -17,7 +17,7 @@ public class FlightTableScene {
 	private static Stage window;
 	private static Scene scene;
 	private static Label lbl;
-	private static Button search, myReservations;
+	private static Button search, home;
 	private static String flightid;
 	private static ComboBox<String> origin, destination, time;
 	private static DatePicker date;
@@ -29,7 +29,7 @@ public class FlightTableScene {
 		window = new Stage(); 
         lbl = new Label("Search for flights:");
         search = new Button("Search");
-        myReservations = new Button("My Reservations"); 
+        home = new Button("Home"); 
         origin = new ComboBox<>();
         destination = new ComboBox<>();
         date = new DatePicker();
@@ -67,22 +67,50 @@ public class FlightTableScene {
         
         search.setOnAction(e -> {
         	
-        	Flights flight1 = new Flights(origin.getValue(), destination.getValue(), time.getValue(), date.getValue().toString(), LoginScreen.currentUsername);
-        	DBConnector.insertFlightDB(flight1);
+        	String flightOrigin = origin.getValue(); 
+        	String flightDestination = destination.getValue(); 
+        	String flightTime = time.getValue(); 
+        	String flightDate = date.getValue().toString(); 
+        	
+        	Flights flight1 = new Flights(flightOrigin, flightDestination, flightTime, flightDate, LoginScreen.currentUsername);
+        	// check database to see if flight exists 
+        	if (DBConnector.flightExists(flight1, flightOrigin, flightDestination, flightDate, flightTime)) {
+        		System.out.println("Flight Exists"); 
+        		Flights searched = DBConnector.getFlight(flightOrigin,flightDestination,flightDate, flightTime); 
+        		System.out.println(searched.getOrigin() + " " + searched.getDestination()+ " " +searched.getDate()+ " " +searched.getTime()); 
+        		
+        	}
+        	
+        	else {
+        		
+        		AnotherAlertBox.display("Sorry!", "That flight doesn't exist. Please try again.");
+        		window.close();
+        	}
         	
         });
         
-       myReservations.setOnAction(e -> {
-     
-    	   	UserFlights.initialize();
-       		window.close();
+       home.setOnAction(e -> {
+    	   
+    	   if (LoginScreen.currentUsername.equals("admin")) {
+    		   
+    		   AdminMainMenu.initialize();
+    		   window.close();
+    		   
+    	   }
+    	   
+    	   else {
+    		   
+        	   UserMainMenu.initialize();
+        	   window.close();
+
+    	   }
       	
         }); 
 
 
         layout = new VBox(10);
         layout.setPadding(new Insets(20, 20, 20, 20));
-        layout.getChildren().addAll(lbl, origin, destination, date, time, search, myReservations);
+        layout.getChildren().addAll(lbl, origin, destination, date, time, search, home);
 
         scene = new Scene(layout, 300, 300);
         window.setScene(scene);
@@ -131,7 +159,7 @@ public class FlightTableScene {
 	}
 
 	public static Button getMyReservations() {
-		return myReservations;
+		return home;
 	}	
 	
 }
