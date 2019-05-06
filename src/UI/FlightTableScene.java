@@ -17,7 +17,7 @@ public class FlightTableScene {
 	private static Stage window;
 	private static Scene scene;
 	private static Label lbl;
-	private static Button search, home;
+	private static Button book, home;
 	private static String flightid;
 	private static ComboBox<String> origin, destination, time;
 	private static DatePicker date;
@@ -27,8 +27,8 @@ public class FlightTableScene {
 		
 		
 		window = new Stage(); 
-        lbl = new Label("Search for flights:");
-        search = new Button("Search");
+        lbl = new Label("Book a flight: ");
+        book = new Button("Book");
         home = new Button("Home"); 
         origin = new ComboBox<>();
         destination = new ComboBox<>();
@@ -65,29 +65,46 @@ public class FlightTableScene {
         destination.setOnAction( e -> System.out.println("User selected " + origin.getValue()) );
         time.setOnAction( e -> System.out.println("User selected " + origin.getValue()) );
         
-        search.setOnAction(e -> {
-        	
-        	String flightOrigin = origin.getValue(); 
-        	String flightDestination = destination.getValue(); 
-        	String flightTime = time.getValue(); 
-        	String flightDate = date.getValue().toString(); 
-        	
-        	Flights flight1 = new Flights(flightOrigin, flightDestination, flightTime, flightDate, LoginScreen.currentUsername);
-        	// check database to see if flight exists 
-        	if (DBConnector.flightExists(flight1, flightOrigin, flightDestination, flightDate, flightTime)) {
-        		System.out.println("Flight Exists"); 
-        		Flights searched = DBConnector.getFlight(flightOrigin,flightDestination,flightDate, flightTime); 
-        		System.out.println(searched.getOrigin() + " " + searched.getDestination()+ " " +searched.getDate()+ " " +searched.getTime()); 
-        		
-        	}
-        	
-        	else {
-        		
-        		AnotherAlertBox.display("Sorry!", "That flight doesn't exist. Please try again.");
-        		window.close();
-        	}
-        	
-        });
+//        search.setOnAction(e -> {
+//        	
+//        	String flightOrigin = origin.getValue(); 
+//        	String flightDestination = destination.getValue(); 
+//        	String flightTime = time.getValue(); 
+//        	String flightDate = date.getValue().toString(); 
+//        	
+//        	Flights flight1 = new Flights(flightOrigin, flightDestination, flightTime, flightDate, LoginScreen.currentUsername);
+//        	// check database to see if flight exists 
+//        	if (DBConnector.flightExists(flight1, flightOrigin, flightDestination, flightDate, flightTime)) {
+//        		System.out.println("Flight Exists"); 
+//        		Flights searched = DBConnector.getFlight(flightOrigin,flightDestination,flightDate, flightTime); 
+//        		System.out.println(searched.getOrigin() + " " + searched.getDestination()+ " " +searched.getDate()+ " " +searched.getTime()); 
+//        		
+//        	}
+//        	
+//        	else {
+//        		
+//        		AnotherAlertBox.display("Sorry!", "That flight doesn't exist. Please try again.");
+//        		window.close();
+//        	}
+//        	
+//        });
+       
+       book.setOnAction(e -> {
+    	   
+    	 try {  
+    		 
+    	   Flights book = new Flights(origin.getValue(), destination.getValue(), time.getValue(), date.getValue().toString(), LoginScreen.currentUsername); 
+    	   DBConnector.insertFlightDB(book); 
+    	   AnotherAlertBox.display("Cool!", "Your flight has been booked.");
+    	   window.close();
+    	   
+    	 }  catch (Exception ex) {
+    		 
+    		 ex.printStackTrace();
+    		 
+    	 }
+    	   
+       }); 
         
        home.setOnAction(e -> {
     	   
@@ -110,7 +127,7 @@ public class FlightTableScene {
 
         layout = new VBox(10);
         layout.setPadding(new Insets(20, 20, 20, 20));
-        layout.getChildren().addAll(lbl, origin, destination, date, time, search, home);
+        layout.getChildren().addAll(lbl, origin, destination, date, time, book, home);
 
         scene = new Scene(layout, 300, 300);
         window.setScene(scene);
@@ -130,8 +147,8 @@ public class FlightTableScene {
 		return lbl;
 	}
 
-	public static Button getButton() {
-		return search;
+	public static Button getBook() {
+		return book;
 	}
 
 	public static String getFlightid() {

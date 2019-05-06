@@ -24,8 +24,18 @@ public class AnotherAlertBox {
         Button home = new Button("Home");
         home.setOnAction(e -> {
         	
-        	AdminMainMenu.initialize();
-        	window.hide();
+        	if (LoginScreen.currentUsername.equals("admin")) {
+        		
+        		AdminMainMenu.initialize();
+            	window.close();
+            	
+        	}
+        	else {
+        		
+        		UserMainMenu.initialize();
+        		window.close();
+        		
+        	}
         	
         });
 

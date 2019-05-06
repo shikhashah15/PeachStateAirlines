@@ -26,7 +26,7 @@ public class UserFlights {
 	@SuppressWarnings("unchecked")
 	public static void initialize() {
 		
-		home = new Button("Main Menu");
+		home = new Button("Home");
 		remove = new Button("Remove Flight");
 		window = new Stage(); 
 		

@@ -11,7 +11,7 @@ public class UserMainMenu {
 	
 	private static Stage window;
 	private static Scene scene;
-	private static Button searchFlights, accountReservations, mainMenu;
+	private static Button bookFlights, accountReservations, mainMenu;
 	private static Label label; 
 	private static VBox layout; 
 	
@@ -23,7 +23,7 @@ public class UserMainMenu {
 		       
 		        label = new Label();
 		        label.setText("Welcome " + LoginScreen.currentUsername + "!");
-		        searchFlights = new Button("Search Flights");
+		        bookFlights = new Button("Book Flights");
 		        accountReservations = new Button("My Reservations");
 		      
 
@@ -31,13 +31,13 @@ public class UserMainMenu {
 		        
 		        layout.setAlignment(Pos.BASELINE_CENTER);
 		        
-		        layout.getChildren().addAll(label, searchFlights, accountReservations, mainMenu);
+		        layout.getChildren().addAll(label, bookFlights, accountReservations, mainMenu);
 		        scene = new Scene(layout, 700, 500);
 		        window.setScene(scene);
 		        window.setTitle("Home");
 		        window.show();
 		        
-		        searchFlights.setOnAction(e -> {
+		        bookFlights.setOnAction(e -> {
 		        	
 		        	FlightTableScene.initialize();
 		        	window.close(); 
@@ -73,8 +73,8 @@ public class UserMainMenu {
 		return scene;
 	}
 
-	public static Button getSearchFlights() {
-		return searchFlights;
+	public static Button getBookFlights() {
+		return bookFlights;
 	}
 
 	public static Button getAccountReservations() {
