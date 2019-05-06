@@ -15,7 +15,7 @@ public class ForgotPasswordScene {
 	private static VBox layout; 
 	private static Stage window; 
 	private static TextField usernameInput; 
-	private static Button submit; 
+	private static Button submit, mainMenu; 
 	private static Scene scene; 
 
 	public static void initialize() {
@@ -24,7 +24,13 @@ public class ForgotPasswordScene {
 		username = new Label("Please enter your username: "); 
 		usernameInput = new TextField(); 
 		submit = new Button("Submit"); 
-		
+		mainMenu = new Button("Main Menu"); 
+		mainMenu.setOnAction(e -> {
+			
+			LoginScreen.initialize();
+			window.close();
+			
+		});
 		submit.setOnAction(e -> {
 			
 			
@@ -68,8 +74,8 @@ public class ForgotPasswordScene {
 		layout = new VBox(30); 
 		layout.setAlignment(Pos.BASELINE_CENTER);
 		layout.setPadding(new Insets(10,30,15,15));
-		layout.getChildren().addAll(username, usernameInput, submit); 
-		scene = new Scene(layout, 400, 200); 
+		layout.getChildren().addAll(username, usernameInput, submit, mainMenu); 
+		scene = new Scene(layout, 400, 250); 
 		window.setScene(scene);
 		window.show();
 		

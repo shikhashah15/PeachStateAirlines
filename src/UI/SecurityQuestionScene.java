@@ -15,7 +15,7 @@ public class SecurityQuestionScene {
 	private static VBox layout; 
 	private static Stage window; 
 	private static TextField answerInput; 
-	private static Button submit; 
+	private static Button submit, mainMenu; 
 	private static Scene scene;
 	public static Label getQuestion() {
 		return question;
@@ -40,9 +40,16 @@ public class SecurityQuestionScene {
 				
 		window = new Stage(); 
 		question = new Label(); 
+		mainMenu = new Button("Main Menu");
 		question.setText(DBConnector.displaySecurityQuestion(username));
 		answerInput = new TextField(); 
 		submit = new Button("Submit"); 
+		mainMenu.setOnAction(e -> {
+			
+			LoginScreen.initialize();
+			window.close();
+			
+		});
 		submit.setOnAction(e -> {
 			
 			if (!(answerInput.getText().isEmpty())) {
@@ -81,10 +88,16 @@ public class SecurityQuestionScene {
 		layout = new VBox(30); 
 		layout.setAlignment(Pos.BASELINE_CENTER);
 		layout.setPadding(new Insets(10,30,15,15));
-		layout.getChildren().addAll(question, answerInput, submit); 
-		scene = new Scene(layout, 400, 200); 
+		layout.getChildren().addAll(question, answerInput, submit, mainMenu); 
+		scene = new Scene(layout, 400, 250); 
 		window.setScene(scene);
 		window.show();
+		
+	}
+	
+	public static Button getMainMenu() {
+		
+		return mainMenu;
 		
 	}
 

@@ -255,7 +255,7 @@ public class RegistrationScene {
 		return answerTXT;
 	}
 
-	public static Button getLoginButton() {
+	public static Button getCreate() {
 		return create;
 	}
 

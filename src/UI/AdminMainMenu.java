@@ -19,7 +19,7 @@ public class AdminMainMenu {
 				window = new Stage(); 
 		        //Button 1
 		        Label label1 = new Label("Welcome Admin!");
-		        searchFlights = new Button("Search for Flights"); 
+		        searchFlights = new Button("Book Flights"); 
 		        changeFlights = new Button("Modify Flights");
 		        accountReservations = new Button("My Reservations");
 		        mainMenu = new Button("Main Menu"); 
@@ -27,7 +27,7 @@ public class AdminMainMenu {
 		        //Layout 1 - children laid out in vertical column
 		        VBox layout1 = new VBox(15);
 		        layout1.getChildren().addAll(label1, changeFlights, accountReservations, searchFlights, mainMenu);
-		        scene = new Scene(layout1, 700, 500);
+		        scene = new Scene(layout1, 500, 300);
 		        layout1.setAlignment(Pos.BASELINE_CENTER); 
 		        window.setScene(scene);
 		        window.setTitle("Admin Home");

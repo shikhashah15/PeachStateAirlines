@@ -20,7 +20,7 @@ public class UserMainMenu {
 		try {
 				window = new Stage(); 
 				mainMenu = new Button("Main Menu"); 
-		       
+				window.setTitle("Home");
 		        label = new Label();
 		        label.setText("Welcome " + LoginScreen.currentUsername + "!");
 		        bookFlights = new Button("Book Flights");
@@ -32,7 +32,7 @@ public class UserMainMenu {
 		        layout.setAlignment(Pos.BASELINE_CENTER);
 		        
 		        layout.getChildren().addAll(label, bookFlights, accountReservations, mainMenu);
-		        scene = new Scene(layout, 700, 500);
+		        scene = new Scene(layout, 500, 300);
 		        window.setScene(scene);
 		        window.setTitle("Home");
 		        window.show();
